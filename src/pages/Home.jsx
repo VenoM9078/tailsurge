@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { atomOneDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
@@ -88,6 +88,40 @@ const Home = () => {
     ).join("")}
 </div>`
   );
+
+  useEffect(() => {
+    return () => {
+      let newCode = `<div className="flex flex-wrap overflow-hidden">${Array.from(
+        { length: items },
+        (_, index) =>
+          `\n <div className="w-${width[defaultColumn - 1]} ${
+            defaultGap > 0 ? "px-1 my-1" : ""
+          } sm:w-${width[mobileColumn - 1]} ${
+            mobileGap > 0 ? "sm:px-1 sm:my-1" : ""
+          } md:w-${width[tabletColumn - 1]} ${
+            tabletGap > 0 ? "md:px-1 md:my-1" : ""
+          } lg:w-${width[laptopColumn - 1]} ${
+            laptopGap > 0 ? "lg:px-1 lg:my-1" : ""
+          } xl:w-${width[desktopColumn - 1]} ${
+            desktopGap > 0 ? "xl:px-1 xl:my-1" : ""
+          }"></div>`
+      ).join("")}
+  </div>`;
+      setCode(newCode);
+    };
+  }, [
+    items,
+    defaultColumn,
+    defaultGap,
+    mobileColumn,
+    mobileGap,
+    tabletColumn,
+    tabletGap,
+    desktopColumn,
+    desktopGap,
+    laptopColumn,
+    laptopGap,
+  ]);
 
   const handleClick = async () => {
     try {
@@ -257,7 +291,7 @@ const Home = () => {
                   <input
                     type="range"
                     min="0"
-                    max="5"
+                    max="1"
                     value={defaultGap}
                     className="range"
                     onChange={defaultGapHandler}
@@ -271,14 +305,6 @@ const Home = () => {
                         style={{ width: `${100 / defaultColumn}%` }}
                         className={`w-${width[defaultColumn - 1]} ${
                           defaultGap > 0 ? "px-1 my-1" : ""
-                        } sm:w-${width[mobileColumn - 1]} ${
-                          mobileGap > 0 ? "sm:px-1 sm:my-1" : ""
-                        } md:w-${width[tabletColumn - 1]} ${
-                          tabletGap > 0 ? "md:px-1 md:my-1" : ""
-                        } lg:w-${width[laptopColumn - 1]} ${
-                          laptopGap > 0 ? "lg:px-1 lg:my-1" : ""
-                        } xl:w-${width[desktopColumn - 1]} ${
-                          desktopGap > 0 ? "xl:px-1 xl:my-1" : ""
                         }`}
                       >
                         <div className="bg-indigo-900 rounded-lg h-12 p-4"></div>
@@ -318,7 +344,7 @@ const Home = () => {
                   <input
                     type="range"
                     min="0"
-                    max="5"
+                    max="1"
                     value={mobileGap}
                     className="range"
                     onChange={mobileGapHandler}
@@ -330,17 +356,9 @@ const Home = () => {
                         key={index}
                         id={`block-${index}`}
                         style={{ width: `${100 / mobileColumn}%` }}
-                        className={`w-${width[defaultColumn - 1]} ${
-                          defaultGap > 0 ? "px-1 my-1" : ""
-                        } sm:w-${width[mobileColumn - 1]} ${
-                          mobileGap > 0 ? "sm:px-1 sm:my-1" : ""
-                        } md:w-${width[tabletColumn - 1]} ${
-                          tabletGap > 0 ? "md:px-1 md:my-1" : ""
-                        } lg:w-${width[laptopColumn - 1]} ${
-                          laptopGap > 0 ? "lg:px-1 lg:my-1" : ""
-                        } xl:w-${width[desktopColumn - 1]} ${
-                          desktopGap > 0 ? "xl:px-1 xl:my-1" : ""
-                        }`}
+                        className={`w-${width[defaultColumn - 1]} sm:w-${
+                          width[mobileColumn - 1]
+                        } ${mobileGap > 0 ? "sm:px-1 sm:my-1" : ""} `}
                       >
                         <div className="bg-indigo-900 rounded-lg h-12 p-4"></div>
                       </div>
@@ -379,7 +397,7 @@ const Home = () => {
                   <input
                     type="range"
                     min="0"
-                    max="5"
+                    max="1"
                     value={tabletGap}
                     className="range"
                     onChange={tabletGapHandler}
@@ -391,17 +409,9 @@ const Home = () => {
                         key={index}
                         id={`block-${index}`}
                         style={{ width: `${100 / tabletColumn}%` }}
-                        className={`w-${width[defaultColumn - 1]} ${
-                          defaultGap > 0 ? "px-1 my-1" : ""
-                        } sm:w-${width[mobileColumn - 1]} ${
-                          mobileGap > 0 ? "sm:px-1 sm:my-1" : ""
-                        } md:w-${width[tabletColumn - 1]} ${
-                          tabletGap > 0 ? "md:px-1 md:my-1" : ""
-                        } lg:w-${width[laptopColumn - 1]} ${
-                          laptopGap > 0 ? "lg:px-1 lg:my-1" : ""
-                        } xl:w-${width[desktopColumn - 1]} ${
-                          desktopGap > 0 ? "xl:px-1 xl:my-1" : ""
-                        }`}
+                        className={`w-${width[defaultColumn - 1]} md:w-${
+                          width[tabletColumn - 1]
+                        } ${tabletGap > 0 ? "md:px-1 md:my-1" : ""} `}
                       >
                         <div className="bg-indigo-900 rounded-lg h-12 p-4"></div>
                       </div>
@@ -440,7 +450,7 @@ const Home = () => {
                   <input
                     type="range"
                     min="0"
-                    max="5"
+                    max="1"
                     value={laptopGap}
                     className="range"
                     onChange={laptopGapHandler}
@@ -452,17 +462,9 @@ const Home = () => {
                         key={index}
                         id={`block-${index}`}
                         style={{ width: `${100 / laptopColumn}%` }}
-                        className={`w-${width[defaultColumn - 1]} ${
-                          defaultGap > 0 ? "px-1 my-1" : ""
-                        } sm:w-${width[mobileColumn - 1]} ${
-                          mobileGap > 0 ? "sm:px-1 sm:my-1" : ""
-                        } md:w-${width[tabletColumn - 1]} ${
-                          tabletGap > 0 ? "md:px-1 md:my-1" : ""
-                        } lg:w-${width[laptopColumn - 1]} ${
-                          laptopGap > 0 ? "lg:px-1 lg:my-1" : ""
-                        } xl:w-${width[desktopColumn - 1]} ${
-                          desktopGap > 0 ? "xl:px-1 xl:my-1" : ""
-                        }`}
+                        className={`w-${width[defaultColumn - 1]} lg:w-${
+                          width[laptopColumn - 1]
+                        } ${laptopGap > 0 ? "lg:px-1 lg:my-1" : ""} `}
                       >
                         <div className="bg-indigo-900 rounded-lg h-12 p-4"></div>
                       </div>
@@ -502,7 +504,7 @@ const Home = () => {
                   <input
                     type="range"
                     min="0"
-                    max="5"
+                    max="1"
                     value={desktopGap}
                     className="range"
                     onChange={desktopGapHandler}
@@ -516,12 +518,6 @@ const Home = () => {
                         style={{ width: `${100 / desktopColumn}%` }}
                         className={`w-${width[defaultColumn - 1]} ${
                           defaultGap > 0 ? "px-1 my-1" : ""
-                        } sm:w-${width[mobileColumn - 1]} ${
-                          mobileGap > 0 ? "sm:px-1 sm:my-1" : ""
-                        } md:w-${width[tabletColumn - 1]} ${
-                          tabletGap > 0 ? "md:px-1 md:my-1" : ""
-                        } lg:w-${width[laptopColumn - 1]} ${
-                          laptopGap > 0 ? "lg:px-1 lg:my-1" : ""
                         } xl:w-${width[desktopColumn - 1]} ${
                           desktopGap > 0 ? "xl:px-1 xl:my-1" : ""
                         }`}
@@ -541,7 +537,22 @@ const Home = () => {
                   language="html"
                   style={atomOneDark}
                 >
-                  {code}
+                  {`<div className="flex flex-wrap overflow-hidden">${Array.from(
+                    { length: items },
+                    (_, index) =>
+                      `\n <div className="w-${width[defaultColumn - 1]} ${
+                        defaultGap > 0 ? "px-1 my-1" : ""
+                      } sm:w-${width[mobileColumn - 1]} ${
+                        mobileGap > 0 ? "sm:px-1 sm:my-1" : ""
+                      } md:w-${width[tabletColumn - 1]} ${
+                        tabletGap > 0 ? "md:px-1 md:my-1" : ""
+                      } lg:w-${width[laptopColumn - 1]} ${
+                        laptopGap > 0 ? "lg:px-1 lg:my-1" : ""
+                      } xl:w-${width[desktopColumn - 1]} ${
+                        desktopGap > 0 ? "xl:px-1 xl:my-1" : ""
+                      }"></div>`
+                  ).join("")}
+</div>`}
                 </SyntaxHighlighter>
               </div>
 
@@ -567,6 +578,39 @@ const Home = () => {
                 </button>
                 <ToastContainer />
               </div>
+
+              <footer className="border-t mt-5">
+                <div className="mt-8 ">
+                  <h1>
+                    <div className="flex flex-wrap items-center justify-center ">
+                      Made with{" "}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="red"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                        />
+                      </svg>{" "}
+                      by{" "}
+                      <a
+                        style={{ fontFamily: "Inter" }}
+                        href="https://github.com/VenoM9078"
+                        className="underline font-bold ml-1"
+                      >
+                        {" "}
+                        Roushan
+                      </a>
+                    </div>
+                  </h1>
+                </div>
+              </footer>
             </div>
           </div>
         </div>
