@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { atomOneDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Home = () => {
   const [items, setItems] = useState(1);
@@ -68,20 +70,43 @@ const Home = () => {
     setDesktopGap(e.target.value);
   };
 
+  const [code, setCode] = useState(
+    `<div className="flex flex-wrap overflow-hidden">${Array.from(
+      { length: items },
+      (_, index) =>
+        `\n <div className="w-${width[defaultColumn - 1]} ${
+          defaultGap > 0 ? "px-1 my-1" : ""
+        } sm:w-${width[mobileColumn - 1]} ${
+          mobileGap > 0 ? "sm:px-1 sm:my-1" : ""
+        } md:w-${width[tabletColumn - 1]} ${
+          tabletGap > 0 ? "md:px-1 md:my-1" : ""
+        } lg:w-${width[laptopColumn - 1]} ${
+          laptopGap > 0 ? "lg:px-1 lg:my-1" : ""
+        } xl:w-${width[desktopColumn - 1]} ${
+          desktopGap > 0 ? "xl:px-1 xl:my-1" : ""
+        }"></div>`
+    ).join("")}
+</div>`
+  );
+
+  const handleClick = async () => {
+    try {
+      await navigator.clipboard.writeText(code);
+      toast("Code has been copied to clipboard!");
+    } catch (err) {
+      console.error("Failed to copy text: ", err);
+    }
+  };
+
   return (
     <>
       <Navbar />
 
       <div className="absolute inset-0 bg-[url(https://play.tailwindcss.com/img/grid.svg)] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
-      <img
-        src="https://www.useblackbox.io/style/images/bg-shape-006-p-2000.png"
-        alt=""
-        className="absolute opacity-50 top-0 left-0 w-full h-full object-cover"
-      />
 
       <div className="relative">
         <div className="relative container m-auto px-6 md:px-12 lg:px-6">
-          <div className="mb-12 pt-40 md:mb-20 md:pt-40 lg:w-9/12 lg:mx-auto">
+          <div className="mb-12 pt-28 lg:w-9/12 lg:mx-auto">
             <h1
               style={{ fontFamily: "Unbounded" }}
               className="text-slate-900 text-center pb-5 text-5xl w-full font-bold sm:text-4xl md:text-5xl"
@@ -136,7 +161,10 @@ const Home = () => {
                 Grid Options
               </h1>
 
-              <div className="tabs tabs-boxed justify-center mx-auto my-5 rounded-full ">
+              <div
+                style={{ fontFamily: "Inter" }}
+                className="tabs items-center xs:tab-xs sm:tab-sm md:tab-md lg:tab-lg tabs-boxed justify-center w-2/3 mx-auto my-5 rounded-full "
+              >
                 <a
                   className={`tab ${
                     activeTab === "Tab 1" ? "tab-active" : ""
@@ -505,29 +533,39 @@ const Home = () => {
                 </div>
               )}
 
+              <hr className="w-full h-1 mx-auto my-4 opacity-20 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700" />
+
               <div className="text-left mt-10">
                 <SyntaxHighlighter
                   showLineNumbers={true}
                   language="html"
                   style={atomOneDark}
                 >
-                  {`<div className="flex flex-wrap overflow-hidden">${Array.from(
-                    { length: items },
-                    (_, index) =>
-                      `\n <div className="w-${width[defaultColumn - 1]} ${
-                        defaultGap > 0 ? "px-1 my-1" : ""
-                      } sm:w-${width[mobileColumn - 1]} ${
-                        mobileGap > 0 ? "sm:px-1 sm:my-1" : ""
-                      } md:w-${width[tabletColumn - 1]} ${
-                        tabletGap > 0 ? "md:px-1 md:my-1" : ""
-                      } lg:w-${width[laptopColumn - 1]} ${
-                        laptopGap > 0 ? "lg:px-1 lg:my-1" : ""
-                      } xl:w-${width[desktopColumn - 1]} ${
-                        desktopGap > 0 ? "xl:px-1 xl:my-1" : ""
-                      }"></div>`
-                  ).join("")}
-</div>`}
+                  {code}
                 </SyntaxHighlighter>
+              </div>
+
+              <div className="mt-8">
+                <button className="btn btn-wide" onClick={handleClick}>
+                  <div className="flex flex-wrap items-center justify-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6 mr-2"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184"
+                      />
+                    </svg>
+                    Copy to Clipboard
+                  </div>
+                </button>
+                <ToastContainer />
               </div>
             </div>
           </div>
