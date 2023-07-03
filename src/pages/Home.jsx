@@ -614,11 +614,6 @@ const Home = () => {
             </div>
           </div>
         </div>
-        {/* <div className="w-full p-4 mt-5 bg-slate-900">
-          <div className="relative container m-auto px-6 md:px-12 lg:px-6">
-            <FormSection />
-          </div>
-        </div> */}
       </div>
     </>
   );
